@@ -30,7 +30,7 @@ self.myinstrument_X = mEvt['subscribeList'][1]  # 索引 1 不存在
 
 **原因：** 策略需要两个标的，但平台配置中只订阅了一个。
 
-**解决方案：** 在 ALGOGENE 平台的 Settings 中，确保订阅列表包含两个标的：
+**解决方案：** 在 ALGOGENE 平台的 Settings 中，确保"instrument"包含两个标的：
 - 第一个标的（Y）：`0005.HK`
 - 第二个标的（X）：`0939.HK`
 
