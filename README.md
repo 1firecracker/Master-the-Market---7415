@@ -1,43 +1,69 @@
-# 配对交易策略 (Pairs Trading)
+# COMP7415 量化交易策略项目
 
-## 1. 安装依赖
+多因子模型股票交易策略，基于ALGOGENE平台开发。
 
+## 项目结构
+
+```
+Algo/
+├── baseline.py              # 单因子均值回归策略（baseline）
+├── algo_sample.py           # 配对交易策略示例
+├── download_data.py         # 数据下载脚本
+├── local run/               # 本地训练和测试
+│   ├── step1.py            # 数据探索与因子计算
+│   ├── step1_4_factor_design.py  # 因子IC分析与选择
+│   ├── train_model.py      # 模型训练脚本
+│   └── results/            # 训练结果记录
+└── knowledge/              # 项目文档
+    └── 项目实施计划.md      # 详细实施计划
+```
+
+## 快速开始
+
+### 1. 数据探索
 ```bash
-pip install yfinance pandas numpy statsmodels
+cd "local run"
+python step1.py
 ```
 
-## 2. 策略逻辑
-
-**统计套利策略（Pairs Trading）**
-
-- 使用两个标的进行配对交易（Y 和 X）
-- 每日收集最近 5 个交易日的收盘价
-- 使用 OLS 线性回归拟合关系：`Y = b × X`（无截距）
-- 计算当前残差：`diff = Y当前价 - b × X当前价`
-- 交易信号：
-  - `diff > 0.1×MSE`：做空 Y，做多 X（数量 = b）
-  - `diff < -0.1×MSE`：做多 Y，做空 X（数量 = b）
-- 持仓时间：5 个交易日
-
-## 3. 错误处理
-
-### IndexError: list index out of range
-
-**错误位置：**
-```python
-self.myinstrument_X = mEvt['subscribeList'][1]  # 索引 1 不存在
+### 2. 因子分析
+```bash
+python step1_4_factor_design.py
 ```
 
-**原因：** 策略需要两个标的，但平台配置中只订阅了一个。
+### 3. 模型训练
+```bash
+python train_model.py
+```
 
-**解决方案：** 在 ALGOGENE 平台的 Settings 中，确保"instrument"包含两个标的：
-- 第一个标的（Y）：`0005.HK`
-- 第二个标的（X）：`0939.HK`
+## 策略说明
 
-## 4. 数据文件
+### Baseline策略
+- **类型**: 单因子均值回归
+- **标的**: 单只股票
+- **逻辑**: 价格偏离均值时反向交易
 
-- `0005.HK.csv`：汇丰控股历史数据
-- `0939.HK.csv`：建设银行历史数据
-- `_meta_.json`：ALGOGENE 元数据配置
-- `download_data.py`：数据下载脚本
+### 多因子模型策略
+- **类型**: 多因子预测模型
+- **因子**: 价格因子（6个）+ 经济因子（2个）
+- **模型**: XGBoost / RandomForest / LinearRegression
+- **预测目标**: 未来5天收益率
 
+## 依赖
+
+- Python 3.x
+- pandas, numpy, scikit-learn
+- xgboost
+- matplotlib, seaborn
+- requests
+
+## 配置
+
+在 `local run/train_model.py` 中修改配置：
+- 股票代码
+- 模型类型
+- 数据时间范围
+
+## 结果
+
+训练结果记录在 `local run/results/record.md`

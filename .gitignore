@@ -1,0 +1,63 @@
+# 图片文件
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.bmp
+*.svg
+*.ico
+
+# CSV数据文件
+*.csv
+
+# Python缓存
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# 虚拟环境
+venv/
+env/
+ENV/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb
+
+# 模型文件（可选，如果不想提交训练好的模型）
+*.pkl
+*.joblib
+*.h5
+*.model
+
+# 日志文件
+*.log
+logs/
+
+# 临时文件
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+
+# 本地运行结果（可选）
+local run/*.png
+local run/*.csv
+local run/models/
+local run/results/*.png
+local run/results/*.csv
+
+# 但保留重要的配置和代码
+!local run/*.py
+!local run/results/*.md
+
